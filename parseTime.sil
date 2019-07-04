@@ -1,0 +1,62 @@
+function parseTime (interval time) {
+    string result = "";
+    number weeks = substring(time, matchStart(time, "[0-9]+w"), matchEnd(time, "[0-9]+w") - 1);
+    number days = substring(time, matchStart(time, "[0-9]+d"), matchEnd(time, "[0-9]+d") - 1);
+    number hours = substring(time, matchStart(time, "[0-9]+h"), matchEnd(time, "[0-9]+h") - 1);
+    number minutes = substring(time, matchStart(time, "[0-9]+m"), matchEnd(time, "[0-9]+m") - 1);
+    number seconds = substring(time, matchStart(time, "[0-9]+s"), matchEnd(time, "[0-9]+s") - 1);
+
+    if (!isNull(weeks)) {
+        string weekSuffix;
+        if (matches(weeks, "[0-9]*1[0-9]$|[0-9]*[5-9]$|[0-9]*0$")) {
+            weekSuffix = " недель";
+            result += "" + weeks + weekSuffix;
+        } else if (matches(weeks, "(?![0-9]*11$)([0-9]*1$)")) {
+            weekSuffix = " неделя";
+            result += "" + weeks + weekSuffix;
+        } else {
+            weekSuffix = " недели";
+            result += "" + weeks + weekSuffix;    
+        }
+    }
+    
+    if (!isNull(days)) {
+        if (!isNull(weeks)) {result += " ";}
+        string daysSuffix;
+        if (matches(days, "[0-9]*1[0-9]$|[0-9]*[5-9]$|[0-9]*0$")) {
+            daysSuffix = " дней";
+            result += "" + days + daysSuffix;
+        } else if (matches(days, "(?![0-9]*11$)([0-9]*1$)")) {
+            daysSuffix = " день";
+            result += "" + days + daysSuffix;
+        } else {
+            daysSuffix = " дня";
+            result += "" + days + daysSuffix;
+        }
+    }
+    
+    if (!isNull(hours)) {
+        if (!isNull(days)) {result += " ";}
+        string hoursSuffix;
+        if (matches(hours, "[0-9]*1[0-9]$|[0-9]*[5-9]$|[0-9]*0$")) {
+            hoursSuffix = " часов";
+            result += "" + hours + hoursSuffix;
+        } else if (matches(days, "(?![0-9]*11$)([0-9]*1$)")) {
+            hoursSuffix = " час";
+            result += "" + hours + hoursSuffix;
+        } else {
+            hoursSuffix = " часа";
+            result += "" + hours + hoursSuffix;
+        }
+    }
+    
+    if (!isNull(minutes)) {
+        // Отображение минут неактуально
+    }
+    
+    if (!isNull(seconds)) {
+        // Отображение секунд неактуально
+    }
+
+    return result;
+}
